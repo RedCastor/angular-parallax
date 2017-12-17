@@ -102,6 +102,7 @@ directive('duParallax',
 
           var properties = { x : 0, y : 0, rotation : 0, opacity: 1, custom: undefined};
 
+          //Create animator y from scope
           if (angular.isDefined($scope.animatorY())) {
             var animator_y = $scope.animatorY();
 
@@ -113,6 +114,7 @@ directive('duParallax',
             $scope.y = parallaxHelper.createAnimator(animator_y.factor, animator_y.max, animator_y.min, animator_y.offset);
           }
 
+          //Create animator x from scope
           if (angular.isDefined($scope.animatorX())) {
               var animator_x = $scope.animatorX();
 
