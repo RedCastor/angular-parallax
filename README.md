@@ -8,7 +8,9 @@ Uses `requestAnimationFrame` and `translate3d` for GPU accelerated, smooth trans
 Install
 -------
 
-    $ bower install ng-parallax
+```bash
+bower install --save https://github.com/RedCastor/ng-parallax.git#0.2.0
+```
 
 Dependencies
 ------------
@@ -92,7 +94,7 @@ $scope.invertColors = function(elementPosition) {
 Example
 -------
 
-Check out [oblador.github.io/angular-parallax](http://oblador.github.io/angular-parallax/) or view the source at [example/index.html](https://github.com/oblador/angular-parallax/blob/master/example/index.html).
+Check out [oblador.github.io/angular-parallax](http://oblador.github.io/angular-parallax/) or view the source at [example/index.html](http://redcastor.github.io/RedCastor/ng-parallax/example).
 
 Building
 --------
