@@ -1,6 +1,6 @@
 angular.module('duParallax.directive', ['duScroll']).
 directive('duParallax',
-  function($rootScope, $window, $document, duParallaxTouchEvents){
+  function($rootScope, $window, $document, duParallaxTouchEvents, parallaxHelper){
 
     var test = angular.element('<div></div>')[0];
     var prefixes = 'transform WebkitTransform MozTransform OTransform'.split(' '); //msTransform
@@ -43,7 +43,9 @@ directive('duParallax',
         x : '=',
         rotation : '=',
         opacity : '=',
-        custom : '='
+        custom : '=',
+        animatorY: '&',
+        animatorX: '&'
       },
       link: function($scope, $element, $attr){
         var element = $element[0];
@@ -79,6 +81,32 @@ directive('duParallax',
 
           var properties = { x : 0, y : 0, rotation : 0, opacity: 1, custom: undefined};
 
+          //Create animator y from scope
+          if (angular.isDefined($scope.animatorY())) {
+            var animator_y = $scope.animatorY();
+
+            animator_y.factor = animator_y.factor ? animator_y.factor : 0;
+            animator_y.max = animator_y.max ? animator_y.max : 0;
+            animator_y.min = animator_y.min ? animator_y.min : 0;
+            animator_y.offset = animator_y.offset ? animator_y.offset : 0;
+
+            $scope.y = parallaxHelper.createAnimator(animator_y.factor, animator_y.max, animator_y.min, animator_y.offset);
+          }
+
+          //Create animator x from scope
+          if (angular.isDefined($scope.animatorX())) {
+              var animator_x = $scope.animatorX();
+
+              animator_x.factor = animator_x.factor ? animator_x.factor : 0;
+              animator_x.max = animator_x.max ? animator_x.max : 0;
+              animator_x.min = animator_x.min ? animator_x.min : 0;
+              animator_x.offset = animator_x.offset ? animator_x.offset : 0;
+
+              $scope.x = parallaxHelper.createAnimator(animator_x.factor, animator_x.max, animator_x.min, animator_x.offset);
+          }
+            console.log($scope.y);
+            console.log($scope.x);
+
           for(var key in properties){
             if(angular.isFunction($scope[key])){
               properties[key] = $scope[key](param);
@@ -86,6 +114,8 @@ directive('duParallax',
               properties[key] = $scope[key];
             }
           }
+
+          console.log(properties);
 
           //Detect changes, if no changes avoid reflow
           var hasChange = angular.isUndefined(currentProperties);

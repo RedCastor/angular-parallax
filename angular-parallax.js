@@ -1,4 +1,4 @@
-angular.module('duParallax', ['duScroll', 'duParallax.directive', 'duParallax.helper']);
+angular.module('duParallax', ['duScroll', 'duParallax.directive', 'duParallax.helper']).value('duParallaxTouchEvents', true);
 
 
 angular.module('duParallax.helper', []).
@@ -21,7 +21,7 @@ factory('parallaxHelper',
 
 angular.module('duParallax.directive', ['duScroll']).
 directive('duParallax',
-  ["$rootScope", "$window", "$document", function($rootScope, $window, $document){
+  ["$rootScope", "$window", "$document", "duParallaxTouchEvents", "parallaxHelper", function($rootScope, $window, $document, duParallaxTouchEvents, parallaxHelper){
 
     var test = angular.element('<div></div>')[0];
     var prefixes = 'transform WebkitTransform MozTransform OTransform'.split(' '); //msTransform
@@ -36,11 +36,11 @@ directive('duParallax',
     //Skipping browsers withouth transform-support.
     //Could do fallback to margin or absolute positioning, but would most likely perform badly
     //so better UX would be to keep things static.
-    if(!transformProperty){
+    if(!transformProperty || (!duParallaxTouchEvents && 'ontouchstart' in window)) {
       return;
     }
 
-    var translate3d = function(result){
+    var translate3d = function(result) {
       if(!result.x && !result.y) return '';
       return 'translate3d(' + Math.round(result.x) + 'px, ' + Math.round(result.y) + 'px, 0)';
     };
@@ -54,9 +54,7 @@ directive('duParallax',
       element.style[transformProperty] = translate3d(result) + rotate(result);
       element.style.opacity = result.opacity;
       if(result.custom) {
-        for(var property in result.custom) {
-          element.style[property] = result.custom[property];
-        }
+        angular.extend(element.style, result.custom);
       }
     };
 
@@ -66,7 +64,9 @@ directive('duParallax',
         x : '=',
         rotation : '=',
         opacity : '=',
-        custom : '='
+        custom : '=',
+        animatorY: '&',
+        animatorX: '&'
       },
       link: function($scope, $element, $attr){
         var element = $element[0];
@@ -102,6 +102,30 @@ directive('duParallax',
 
           var properties = { x : 0, y : 0, rotation : 0, opacity: 1, custom: undefined};
 
+          if (angular.isDefined($scope.animatorY())) {
+            var animator_y = $scope.animatorY();
+
+            animator_y.factor = animator_y.factor ? animator_y.factor : 0;
+            animator_y.max = animator_y.max ? animator_y.max : 0;
+            animator_y.min = animator_y.min ? animator_y.min : 0;
+            animator_y.offset = animator_y.offset ? animator_y.offset : 0;
+
+            $scope.y = parallaxHelper.createAnimator(animator_y.factor, animator_y.max, animator_y.min, animator_y.offset);
+          }
+
+          if (angular.isDefined($scope.animatorX())) {
+              var animator_x = $scope.animatorX();
+
+              animator_x.factor = animator_x.factor ? animator_x.factor : 0;
+              animator_x.max = animator_x.max ? animator_x.max : 0;
+              animator_x.min = animator_x.min ? animator_x.min : 0;
+              animator_x.offset = animator_x.offset ? animator_x.offset : 0;
+
+              $scope.x = parallaxHelper.createAnimator(animator_x.factor, animator_x.max, animator_x.min, animator_x.offset);
+          }
+            console.log($scope.y);
+            console.log($scope.x);
+
           for(var key in properties){
             if(angular.isFunction($scope[key])){
               properties[key] = $scope[key](param);
@@ -109,6 +133,8 @@ directive('duParallax',
               properties[key] = $scope[key];
             }
           }
+
+          console.log(properties);
 
           //Detect changes, if no changes avoid reflow
           var hasChange = angular.isUndefined(currentProperties);

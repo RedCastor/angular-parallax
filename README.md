@@ -58,9 +58,15 @@ Attributes can be literals or a function called with a parameter object containi
 * rotation
 * opacity
 * custom
+* animator-x
+* animator-y
 
 ```html
 <img src="img.png" du-parallax y="accelleratedScroll" x="moveInFromLeft" opacity="fadeIn" rotation="'35deg'" alt="" />
+```
+
+```html
+<img src="img.png" du-parallax animator-y="{factor:-0.3, max:400, min:-200, offset:-200}" />
 ```
 
 ### Custom animator
