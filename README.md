@@ -20,7 +20,7 @@ Dependencies
 Example
 -------
 
-[Demo](https://redcastor.github.io/RedCastor/angular-parallax/example).
+[Demo](https://redcastor.github.io/angular-parallax//example).
 
 
 Usage
