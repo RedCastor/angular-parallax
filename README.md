@@ -9,7 +9,7 @@ Install
 -------
 
 ```bash
-bower install --save https://github.com/RedCastor/angular-parallax.git
+bower install --save https://github.com/RedCastor/angular-parallax.git#0.2.0-redcastor
 ```
 
 Dependencies
