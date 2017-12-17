@@ -41,11 +41,11 @@ directive('duParallax',
       scope : {
         y : '=?',
         x : '=?',
-        rotation : '=?',
-        opacity : '=?',
-        custom : '=?',
-        animatorY: '&?',
-        animatorX: '&?'
+        rotation : '=',
+        opacity : '=',
+        custom : '=',
+        animatorY: '&',
+        animatorX: '&'
       },
       link: function($scope, $element, $attr){
         var element = $element[0];
