@@ -9,7 +9,7 @@ Install
 -------
 
 ```bash
-bower install --save https://github.com/RedCastor/ng-parallax.git#0.2.0
+bower install --save https://github.com/RedCastor/ng-parallax.git
 ```
 
 Dependencies
