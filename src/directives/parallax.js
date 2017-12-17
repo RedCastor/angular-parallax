@@ -39,13 +39,13 @@ directive('duParallax',
 
     return{
       scope : {
-        y : '=',
-        x : '=',
-        rotation : '=',
-        opacity : '=',
-        custom : '=',
-        animatorY: '&',
-        animatorX: '&'
+        y : '=?',
+        x : '=?',
+        rotation : '=?',
+        opacity : '=?',
+        custom : '=?',
+        animatorY: '&?',
+        animatorX: '&?'
       },
       link: function($scope, $element, $attr){
         var element = $element[0];
@@ -106,6 +106,11 @@ directive('duParallax',
           }
 
           for(var key in properties){
+
+            if (key === 'animatorX' && key === 'animatorY'){
+              continue;
+            }
+
             if(angular.isFunction($scope[key])){
               properties[key] = $scope[key](param);
             } else if($scope[key]){
