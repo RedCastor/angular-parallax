@@ -104,8 +104,6 @@ directive('duParallax',
 
               $scope.x = parallaxHelper.createAnimator(animator_x.factor, animator_x.max, animator_x.min, animator_x.offset);
           }
-            console.log($scope.y);
-            console.log($scope.x);
 
           for(var key in properties){
             if(angular.isFunction($scope[key])){
@@ -114,8 +112,6 @@ directive('duParallax',
               properties[key] = $scope[key];
             }
           }
-
-          console.log(properties);
 
           //Detect changes, if no changes avoid reflow
           var hasChange = angular.isUndefined(currentProperties);
