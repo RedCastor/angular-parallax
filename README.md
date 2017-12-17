@@ -16,6 +16,13 @@ Dependencies
 ------------
 [AngularJS](https://github.com/angular/angular.js) and [angular-scroll](https://github.com/oblador/angular-scroll).
 
+
+Example
+-------
+
+[Demo](http://redcastor.github.io/RedCastor/angular-parallax/example).
+
+
 Usage
 -----
 
@@ -90,11 +97,6 @@ $scope.invertColors = function(elementPosition) {
 <div du-parallax custom="invertColors">[loads of text…]</div>
 ```
 
-
-Example
--------
-
-Check out [oblador.github.io/angular-parallax](http://oblador.github.io/angular-parallax/) or view the source at [example/index.html](http://redcastor.github.io/RedCastor/ng-parallax/example).
 
 Building
 --------
