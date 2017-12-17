@@ -60,8 +60,8 @@ directive('duParallax',
 
     return{
       scope : {
-        y : '=',
-        x : '=',
+        y : '=?',
+        x : '=?',
         rotation : '=',
         opacity : '=',
         custom : '=',
@@ -103,7 +103,7 @@ directive('duParallax',
           var properties = { x : 0, y : 0, rotation : 0, opacity: 1, custom: undefined};
 
           //Create animator y from scope
-          if (angular.isDefined($scope.animatorY())) {
+          if (angular.isObject(($scope.animatorY()))) {
             var animator_y = $scope.animatorY();
 
             animator_y.factor = animator_y.factor ? animator_y.factor : 0;
@@ -115,7 +115,7 @@ directive('duParallax',
           }
 
           //Create animator x from scope
-          if (angular.isDefined($scope.animatorX())) {
+          if (angular.isObject($scope.animatorX())) {
               var animator_x = $scope.animatorX();
 
               animator_x.factor = animator_x.factor ? animator_x.factor : 0;
